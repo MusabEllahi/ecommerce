@@ -46,6 +46,7 @@ const App = () => {
   useEffect(() => {
     if (localStorage.getItem('ProductsList') != null) {
       let fetchProduct = localStorage.getItem('ProductsList')
+      
     } else {
       localStorage.setItem('ProductsList', JSON.stringify([]))
     }
