@@ -1,5 +1,17 @@
 'use client'
 import React, { useState, useEffect } from 'react'
+import { Sidebar } from 'flowbite-react'
+import {
+  HiArrowSmRight,
+  HiChartPie,
+  HiInbox,
+  HiOutlineMinusSm,
+  HiOutlinePlusSm,
+  HiShoppingBag,
+  HiTable,
+  HiUser,
+} from 'react-icons/hi'
+import { twMerge } from 'tailwind-merge'
 import {
   MDBIcon,
   MDBContainer,
@@ -29,66 +41,79 @@ export default function App() {
   }, [])
 
   return (
-    <MDBNavbar expand="lg" light bgColor="black" className=" text-white">
-      <MDBContainer className="text-white" fluid>
-        <MDBNavbarBrand className="text-white">
-          <MDBIcon fas icon="dragon fa-2x me-3" style={{ color: '#ff6219' }} />{' '}
-          Shopee
-        </MDBNavbarBrand>
-        <MDBNavbarToggler
-          className="bg-white"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-          onClick={() => setOpenNavSecond(!openNavSecond)}
-        >
-          <MDBIcon icon="bars" fas />
-        </MDBNavbarToggler>
-        <MDBCollapse navbar open={openNavSecond}>
-          <MDBNavbarNav>
-            <MDBNavbarLink
-              className="text-white"
-              active
-              aria-current="page"
-              href="/"
-            >
-              Home
-            </MDBNavbarLink>
-            <MDBNavbarLink className="text-white" href="/Product">
-              Product
-            </MDBNavbarLink>
-            {authenticatedUser ? (
-              <MDBBtn
-                onClick={() => {
-                  localStorage.setItem('AuthUser', JSON.stringify(null))
-                  location.reload()
-                }}
-                style={{ backgroundColor: '#ff6219' }}
+    <div>
+      <MDBNavbar expand="lg" light bgColor="black" className=" text-white">
+        <MDBContainer className="text-white" fluid>
+          <MDBNavbarBrand className="text-white">
+            <MDBIcon
+              fas
+              icon="dragon fa-2x me-3"
+              style={{ color: '#ff6219' }}
+            />{' '}
+            Shopee
+          </MDBNavbarBrand>
+          <MDBNavbarToggler
+            className="bg-white"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            onClick={() => setOpenNavSecond(!openNavSecond)}
+          >
+            <MDBIcon icon="bars" fas />
+          </MDBNavbarToggler>
+          <MDBCollapse navbar open={openNavSecond}>
+            <MDBNavbarNav>
+              <MDBNavbarLink
+                className="text-white"
+                active
+                aria-current="page"
+                href="/"
               >
-                Log Out
-              </MDBBtn>
-            ) : (
-              <MDBNavbarLink className="text-white" href="/Login">
-                Log In
+              Home
               </MDBNavbarLink>
-            )}
-          </MDBNavbarNav>
-          <div className="flex">
-            <MDBNavbarBrand className="text-white">
-              {authenticatedUser ? authenticatedUser.name : 'No user'}
-            </MDBNavbarBrand>
-            <MDBNavbarLink
-              className="rounded-lg w-[90px]"
-              hidden={authenticatedUser ? true : false}
-              style={{ color: 'white', backgroundColor: '#ff6219' }}
-              href="/SignUp"
-            >
-              <span className="flex p-2 gap-2">
-                SignUp <MDBIcon fas className="pt-1" icon="user" />
-              </span>
-            </MDBNavbarLink>
-          </div>
-        </MDBCollapse>
-      </MDBContainer>
-    </MDBNavbar>
+              {(authenticatedUser && authenticatedUser.name == "Admin") ?
+
+                <MDBNavbarLink className="text-white" href="/addproducts">
+                Add Product
+              </MDBNavbarLink>
+              :
+              <MDBNavbarLink className="text-white" href="/Product">
+                Product
+              </MDBNavbarLink>
+              }
+              {authenticatedUser ? (
+                <MDBBtn
+                  onClick={() => {
+                    localStorage.setItem('AuthUser', JSON.stringify(null))
+                    window.location.href ='/'
+                  }}
+                  style={{ backgroundColor: '#ff6219' }}
+                >
+                  Log Out
+                </MDBBtn>
+              ) : (
+                <MDBNavbarLink className="text-white" href="/Login">
+                  Log In
+                </MDBNavbarLink>
+              )}
+            </MDBNavbarNav>
+            <div className="flex">
+              <MDBNavbarBrand className="text-white">
+                {authenticatedUser ? authenticatedUser.name : 'No user'}
+              </MDBNavbarBrand>
+              <MDBNavbarLink
+                className="rounded-lg w-[90px]"
+                hidden={authenticatedUser ? true : false}
+                style={{ color: 'white', backgroundColor: '#ff6219' }}
+                href="/SignUp"
+              >
+                <span className="flex p-2 gap-2">
+                  SignUp <MDBIcon fas className="pt-1" icon="user" />
+                </span>
+              </MDBNavbarLink>
+            </div>
+          </MDBCollapse>
+        </MDBContainer>
+      </MDBNavbar>
+    </div>
   )
 }

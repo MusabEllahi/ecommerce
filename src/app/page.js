@@ -20,6 +20,18 @@ import {
   MDBNavbarToggler,
   MDBNavbarItem,
 } from 'mdb-react-ui-kit'
+import { Sidebar } from 'flowbite-react'
+import {
+  HiArrowSmRight,
+  HiChartPie,
+  HiInbox,
+  HiOutlineMinusSm,
+  HiOutlinePlusSm,
+  HiShoppingBag,
+  HiTable,
+  HiUser,
+} from 'react-icons/hi'
+import { twMerge } from 'tailwind-merge'
 import './ecommerce-category-product.css'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -31,6 +43,7 @@ const App = () => {
     name: '',
     password: '',
   })
+  const [product, setProduct] = useState([])
 
   // for Users
   useEffect(() => {
@@ -46,17 +59,15 @@ const App = () => {
   useEffect(() => {
     if (localStorage.getItem('ProductsList') != null) {
       let fetchProduct = localStorage.getItem('ProductsList')
-      
+      let jsonData = JSON.parse(fetchProduct)
+      setProduct(jsonData)
     } else {
       localStorage.setItem('ProductsList', JSON.stringify([]))
     }
   }, [])
 
   return (
-    <div
-      hidden={authUser && authUser.name == 'Admin'}
-      className="container mt-4"
-    >
+    <div className="container mt-4">
       <div className="grid grid-cols-12 gap-x-3 gap-y-2">
         <div className="col-span-12 mx-auto w-full md:col-span-3 bg-white rounded-lg text-m shadow-sm ">
           <MDBNavbar className="h-full " expand="md">
@@ -69,7 +80,7 @@ const App = () => {
               <MDBIcon icon="bars" fas />
             </MDBNavbarToggler>
 
-            <MDBCollapse navbar className='h-auto' open={openBasic}>
+            <MDBCollapse navbar className="h-auto" open={openBasic}>
               <ul className="flex flex-col ">
                 <li className=" pt-3 lg:pb-1 xl:pb-2">
                   <MDBNavbarItem>
@@ -176,149 +187,76 @@ const App = () => {
           </MDBCarousel>
         </div>
       </div>
-      <MDBContainer fluid className="my-5">
-        <MDBRow>
-          <MDBCol sm="6" md="4" lg="3" className="mb-4 mb-lg-0">
-            <MDBCard className='max-w-[350px] mx-auto'>
-              <div className="d-flex justify-content-center p-3">
-                <p className="lead mb-0 text-black">Today{"'"}s Combo Offer</p>
-              </div>
-              <MDBCardImage
-                src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/4.webp"
-                position="top"
-                alt="Laptop"
-              />
-              <MDBCardBody>
-                <div className="d-flex justify-content-between">
-                  <p className="small">
-                    <a href="#!" className="text-muted">
-                      Laptops
-                    </a>
-                  </p>
-                  <p className="small text-danger">
-                    <s>$1099</s>
-                  </p>
-                </div>
-
-                <div className="d-flex justify-content-between mb-3">
-                  <h5 className="mb-0">HP Notebook</h5>
-                  <h5 className="text-dark mb-0">$999</h5>
-                </div>
-
-                <div class="d-flex justify-content-between mb-2">
-                  <MDBBtn color="black" className="mb-4 w-100" size="lg">
-                    Buy Now
-                  </MDBBtn>
-                </div>
-              </MDBCardBody>
-            </MDBCard>
-          </MDBCol>
-          <MDBCol sm="6" md="4" lg="3" className="mb-4 mb-lg-0">
-            <MDBCard className='max-w-[350px] ml-auto mr-auto'>
-              <div className="d-flex justify-content-center text-black p-3">
-                <p className="lead mb-0">Today{"'"}s Combo Offer</p>
-              </div>
-              <MDBCardImage
-                src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/7.webp"
-                position="top"
-                alt="Laptop"
-              />
-              <MDBCardBody>
-                <div className="d-flex justify-content-between">
-                  <p className="small">
-                    <a href="#!" className="text-muted">
-                      Categories : Laptops
-                    </a>
-                  </p>
-                  <p className="small text-danger">
-                    <s>$1199</s>
-                  </p>
-                </div>
-
-                <div className="d-flex justify-content-between mb-3">
-                  <h5 className="mb-0">HP Envy</h5>
-                  <h5 className="text-dark mb-0">$1099</h5>
-                </div>
-
-                <div class="d-flex justify-content-between mb-2">
-                  <MDBBtn color="black" className="mb-4 w-100" size="lg">
-                    Buy Now
-                  </MDBBtn>
-                </div>
-              </MDBCardBody>
-            </MDBCard>
-          </MDBCol>
-          <MDBCol sm="6" md="4" lg="3" className="mb-4 mb-lg-0">
-            <MDBCard className='max-w-[350px] ml-auto mr-auto'>
-              <div className="d-flex text-black justify-content-center p-3">
-                <p className="lead mb-0">Today{"'"}s Combo Offer</p>
-              </div>
-              <MDBCardImage
-                src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/5.webp"
-                position="top"
-                alt="Gaming Laptop"
-              />
-              <MDBCardBody>
-                <div className="d-flex justify-content-between">
-                  <p className="small">
-                    <a href="#!" className="text-muted">
-                      Laptops
-                    </a>
-                  </p>
-                  <p className="small text-danger">
-                    <s>$1399</s>
-                  </p>
-                </div>
-
-                <div className="d-flex justify-content-between mb-3">
-                  <h5 className="mb-0">Toshiba B77</h5>
-                  <h5 className="text-dark mb-0">$1299</h5>
-                </div>
-
-                <div class="d-flex justify-content-between mb-2">
-                  <MDBBtn color="black" className="mb-4 w-100" size="lg">
-                    Buy Now
-                  </MDBBtn>
-                </div>
-              </MDBCardBody>
-            </MDBCard>
-          </MDBCol>
-          <MDBCol sm="6" md="4" lg="3" className="mb-4 mb-lg-0">
-            <MDBCard className='max-w-[350px] ml-auto mr-auto'>
-              <div className="d-flex text-black justify-content-center p-3">
-                <p className="lead mb-0">Today{"'"}s Combo Offer</p>
-              </div>
-              <MDBCardImage
-                src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/2.webp"
-                position="top"
-                alt="Gaming Laptop"
-              />
-              <MDBCardBody>
-                <div className="d-flex justify-content-between">
-                  <p className="small">
-                    <a href="#!" className="text-muted">
-                      Laptops
-                    </a>
-                  </p>
-                  <p className="small text-danger">
-                    <s>$1399</s>
-                  </p>
-                </div>
-
-                <div className="d-flex justify-content-between mb-3">
-                  <h5 className="mb-0">Toshiba B77</h5>
-                  <h5 className="text-dark mb-0">$1299</h5>
-                </div>
-
-                <div class="d-flex justify-content-between mb-2">
-                  <MDBBtn color="black" className="mb-4 w-100" size="lg">
-                    Buy Now
-                  </MDBBtn>
-                </div>
-              </MDBCardBody>
-            </MDBCard>
-          </MDBCol>
-        </MDBRow>
+      <MDBContainer fluid className=" my-5 text-center">
+        <h4 className="mt-4 mb-5">
+          <strong>Best Seller's</strong>
+        </h4>
+        <div className="flex flex-row ">
+          <MDBRow>
+            {product && product.length > 0 ? (
+              product.map((item, index) => {
+                return (
+                  <MDBCol
+                    hidden={item.categorie != 'Fashions'}
+                    sm="6"
+                    md="4"
+                    lg="3"
+                    className="mb-4 justify-center"
+                  >
+                    <MDBCard key={index}>
+                      <MDBRipple
+                        rippleColor="light"
+                        rippleTag="div"
+                        className="bg-image d-flex justify-center rounded hover-zoom"
+                      >
+                        <MDBCardImage
+                          src={item.imgUrl}
+                          fluid
+                          className=" max-h-[120px]"
+                        />
+                        <a href="#!">
+                          <div className="mask">
+                            <div className="d-flex justify-content-start align-items-end h-100">
+                              <h5>
+                                <span className="badge bg-primary ms-2">
+                                  Best
+                                </span>
+                              </h5>
+                            </div>
+                          </div>
+                          <div className="hover-overlay">
+                            <div
+                              className="mask"
+                              style={{
+                                backgroundColor: 'rgba(251, 251, 251, 0.15)',
+                              }}
+                            ></div>
+                          </div>
+                        </a>
+                      </MDBRipple>
+                      <MDBCardBody>
+                        <a href="#!" className="text-reset">
+                          <h5 className="card-title mb-3">
+                            {item.ProductName}
+                          </h5>
+                        </a>
+                        <a href="#!" className="text-reset">
+                          <p>{item.categorie}</p>
+                        </a>
+                        <h6>{item.price}</h6>
+                        <MDBBtn color="black" className="my-4" size="lg">
+                          Add to Cart
+                        </MDBBtn>
+                      </MDBCardBody>
+                    </MDBCard>
+                  </MDBCol>
+                )
+              })
+            ) : (
+              <h1>No Product Found</h1>
+            )}
+          </MDBRow>
+        </div>
       </MDBContainer>
     </div>
   )

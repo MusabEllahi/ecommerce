@@ -1,7 +1,8 @@
-import "./globals.css";
 import 'mdb-react-ui-kit/dist/css/mdb.min.css'
 import "@fortawesome/fontawesome-free/css/all.min.css"
 import Navbar from "@/components/navbar/navbar"
+import Footer from "@/components/navbar/footer"
+import "./globals.css";
 
 export const metadata = {
   title: "Create Next App",
@@ -14,6 +15,10 @@ export default function RootLayout({ children }) {
       <body  suppressHydrationWarning={true}><Navbar />
       
         {children}</body>
+      <footer>
+        <Footer/>
+
+      </footer>
     </html>
   );
 }
