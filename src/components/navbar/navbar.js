@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
+import '../../app/styles.css'
 import { Sidebar } from 'flowbite-react'
 import {
   HiArrowSmRight,
@@ -23,6 +24,7 @@ import {
   MDBNavbarLink,
   MDBCollapse,
   MDBBtn,
+  MDBBadge,
 } from 'mdb-react-ui-kit'
 import getUsers from '@/hooks/getUsers'
 import { useRouter } from 'next/navigation'
@@ -96,10 +98,16 @@ export default function App() {
                 </MDBNavbarLink>
               )}
             </MDBNavbarNav>
-            <div className="flex">
+            <div className="flex pr-4">
               <MDBNavbarBrand className="text-white">
-                {authenticatedUser ? authenticatedUser.name : 'No user'}
+              <span><MDBIcon fas className="pt-1 px-1" icon="user" />{authenticatedUser ?authenticatedUser.name : 'No user'}</span>
               </MDBNavbarBrand>
+              <MDBNavbarLink className='relative py-4' href='#'>
+              <MDBBadge pill className='absolute top-3 -right-2' color='danger'>0</MDBBadge>
+              <span className='flex'>
+                <MDBIcon fas  icon='shopping-cart fa-2x'></MDBIcon>
+              </span>
+            </MDBNavbarLink>
               <MDBNavbarLink
                 className="rounded-lg w-[90px]"
                 hidden={authenticatedUser ? true : false}
