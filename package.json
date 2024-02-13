@@ -16,6 +16,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-spinners": "^0.13.8",
+    "sweetalert2": "^11.10.5",
     "use-popper": "^1.1.6"
   },
   "devDependencies": {

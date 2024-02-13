@@ -16,7 +16,7 @@ import {
   MDBModalFooter,
 } from 'mdb-react-ui-kit'
 import { useState, useEffect } from 'react'
-import getUsers from '@/hooks/getUsers'
+import getUsers from '../../hooks/getUsers'
 import { useRouter } from 'next/navigation'
 
 function App() {
@@ -141,7 +141,7 @@ function App() {
         </svg>
       </div>
     )
-  }
+  } 
 
   return (
     <MDBContainer

@@ -16,6 +16,8 @@ import {
 } from 'mdb-react-ui-kit'
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true)
+  const Swal = require('sweetalert2')
   const [formStates, setFormStates] = useState({
     ProductName: '',
     imgUrl: '',
@@ -29,43 +31,117 @@ function App() {
     imgUrl: '',
     Description: '',
     price: '',
-    categorie:''
+    categorie: '',
   })
-  const [product,setProduct] = useState([])
-  function clearStates(){
+  const [product, setProduct] = useState([])
+  function clearStates() {
     setFormStates({
       ProductName: '',
       imgUrl: '',
       Description: '',
       price: '',
     })
-
   }
 
   const addProuduct = () => {
     // When Product Name is Empty
     if (!formStates.ProductName) {
-      setErrors({ ...errors, ProductName: 'Empty Product Name' })
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer
+          toast.onmouseleave = Swal.resumeTimer
+        },
+      })
+      Toast.fire({
+        icon: 'warning',
+        title: 'Empty Name Field',
+        iconColor: 'red'
+      })
       return
     }
     // When Product Name is Empty
     if (!formStates.imgUrl) {
-      setErrors({ ...errors, imgUrl: 'Empty Url' })
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer
+          toast.onmouseleave = Swal.resumeTimer
+        },
+      })
+      Toast.fire({
+        icon: 'warning',
+        title: 'Empty URL',
+        iconColor: 'red'
+      })
       return
     }
-    // When Product Name is Empty
+    // When Product Description is Empty
     if (!formStates.Description) {
-      setErrors({ ...errors, Description: 'Empty Description' })
+            const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer
+          toast.onmouseleave = Swal.resumeTimer
+        },
+      })
+      Toast.fire({
+        icon: 'warning',
+        title: 'Product Description is Empty',
+        iconColor: 'red'
+      })
       return
     }
-    // When Product Name is Empty
+    // When Product Price is Empty
     if (!formStates.price) {
-      setErrors({ ...errors, price: 'Wrong Price' })
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer
+          toast.onmouseleave = Swal.resumeTimer
+        },
+      })
+      Toast.fire({
+        icon: 'warning',
+        title: 'Product Price is not defined',
+        iconColor: 'red'
+      })
       return
     }
-    // When Product Name is Empty
+    // When Category is not selected
     if (!formStates.categorie) {
-      setErrors({ ...errors, categorie: 'select categorie' })
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer
+          toast.onmouseleave = Swal.resumeTimer
+        },
+      })
+      Toast.fire({
+        icon: 'warning',
+        title: 'Category is not selected',
+        iconColor: 'red'
+      })
       return
     }
     let fetchUser = [...product]
@@ -75,23 +151,50 @@ function App() {
     location.reload()
   }
   useEffect(() => {
-    if (localStorage.getItem("ProductsList") != null) {
-        let fetchProduct = localStorage.getItem("ProductsList");
-        let jsonData = JSON.parse(fetchProduct);
-        setProduct(jsonData)
+    if (localStorage.getItem('ProductsList') != null) {
+      let fetchProduct = localStorage.getItem('ProductsList')
+      let jsonData = JSON.parse(fetchProduct)
+      setProduct(jsonData)
+      setIsLoading(false)
     }
-
-}, [])
+  }, [])
+  if (isLoading) {
+    return (
+      <div className="bg-white h-screen w-screen flex justify-center items-center top-0 absolute z-[100]">
+        <svg
+          className="animate-spin  h-5 w-5 text-blue-400"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+      </div>
+    )
+  }
 
   return (
     <MDBContainer
+      fluid
+      className="d-flex align-items-center justify-content-center bg-image "
       style={{
         backgroundImage:
-          'url(https://www.publicdomainpictures.net/pictures/270000/velka/bright-orange-background.jpg)',
+          'url(https://www.clker.com/cliparts/4/6/a/b/14303682411286369994orange%20peach%20pink%20dark%20light%20combination%20plus%20radiant%20mixed%20gradient%20wallpaper%20blur%20background%20android.jpg)',
       }}
-      fluid
     >
-      <MDBRow className="d-flex justify-content-center align-items-center">
+      <MDBRow className="d-flex w-100 justify-content-center align-items-center gradient-custom-3">
         <MDBCol lg="9" className=" my-5">
           <h1 class="text-black mb-4">Add Product Details</h1>
 
@@ -272,11 +375,11 @@ function App() {
                     </label>
                   </div>
                 </MDBCol>
-                  {errors.categorie && (
-                    <span className="relative bottom-3 left-3  text-red-500">
-                      {errors.categorie}
-                    </span>
-                  )}
+                {errors.categorie && (
+                  <span className="relative bottom-3 left-3  text-red-500">
+                    {errors.categorie}
+                  </span>
+                )}
               </MDBRow>
 
               <hr className="mx-n3" />

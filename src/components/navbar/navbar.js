@@ -26,13 +26,14 @@ import {
   MDBBtn,
   MDBBadge,
 } from 'mdb-react-ui-kit'
-import getUsers from '@/hooks/getUsers'
+import getUsers from '../../hooks/getUsers'
 import { useRouter } from 'next/navigation'
 
 export default function App() {
   const { loggedUser } = getUsers()
   const [openNavSecond, setOpenNavSecond] = useState(false)
   const [authenticatedUser, setAuthenticatedUser] = useState(null)
+  const [order,setOrder] = useState([])
   const router = useRouter()
   useEffect(() => {
     if (localStorage.getItem('AuthUser') != null) {
@@ -41,6 +42,14 @@ export default function App() {
       if (fetchUser) setAuthenticatedUser(actualUser)
     }
   }, [])
+  
+  useEffect(() => {
+    if (localStorage.getItem('YourOrder') != null) {
+      let fetchOrder = localStorage.getItem('YourOrder')
+      let jsonData = JSON.parse(fetchOrder)
+      setOrder(jsonData)
+    }
+  }, [order.length])
 
   return (
     <div>
@@ -102,19 +111,18 @@ export default function App() {
               <MDBNavbarBrand className="text-white">
               <span><MDBIcon fas className="pt-1 px-1" icon="user" />{authenticatedUser ?authenticatedUser.name : 'No user'}</span>
               </MDBNavbarBrand>
-              <MDBNavbarLink className='relative py-4' href='#'>
-              <MDBBadge pill className='absolute top-3 -right-2' color='danger'>0</MDBBadge>
+              <MDBNavbarLink className='relative py-4' href='/yourcart'>
+              <MDBBadge pill className='absolute top-3 -right-2' color='danger'>{order.length}</MDBBadge>
               <span className='flex'>
                 <MDBIcon fas  icon='shopping-cart fa-2x'></MDBIcon>
               </span>
             </MDBNavbarLink>
               <MDBNavbarLink
-                className="rounded-lg w-[90px]"
                 hidden={authenticatedUser ? true : false}
-                style={{ color: 'white', backgroundColor: '#ff6219' }}
                 href="/SignUp"
+                className='pt-3 px-4'
               >
-                <span className="flex p-2 gap-2">
+                <span  style={{ color: 'white', backgroundColor: '#ff6219' }}className="  rounded-lg flex p-2 gap-2">
                   SignUp <MDBIcon fas className="pt-1" icon="user" />
                 </span>
               </MDBNavbarLink>

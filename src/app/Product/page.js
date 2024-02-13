@@ -19,18 +19,107 @@ import {
 import { ClipLoader } from 'react-spinners'
 
 const About = () => {
+  const Swal = require('sweetalert2')
   const [product, setProduct] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [authUser, setAuthUser] = useState([])
+  const [bucket, setBucket] = useState([])
+  const [order,setOrder] = useState([])
 
-  useEffect(() => {
-    if (localStorage.getItem('ProductsList') != null) {
-      let fetchProduct = localStorage.getItem('ProductsList')
-      let jsonData = JSON.parse(fetchProduct)
-      setProduct(jsonData)
+  const addToCart = (productData) => {
+    let cloneBucket = [...bucket]
+    if(authUser == null){
 
-      setIsLoading(false)
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "error",
+        title: "LogIn First"
+      });
+      return
     }
-  }, [product])
+    let isAlreadyAdded = false;
+    for (let i=0;i<cloneBucket.length;i++){
+      if(productData.ProductName == cloneBucket[i].ProductName){
+        isAlreadyAdded =true;
+        break;
+      }
+
+    };
+    if (isAlreadyAdded) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "warning",
+        title: productData.ProductName +" is Already Added",
+        iconColor:"red"
+      });
+      return
+    }
+    cloneBucket.push(productData)
+    setBucket(cloneBucket)
+    localStorage.setItem("YourOrder",JSON.stringify(cloneBucket))
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 1000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer
+        toast.onmouseleave = Swal.resumeTimer
+      },
+    })
+    Toast.fire({
+      icon: 'success',
+      title: 'Item Added in your Cart',
+    })
+
+  }
+  useEffect(() => {
+    if (localStorage.getItem('YourOrder') != null) {
+      let fetchOrder = localStorage.getItem('YourOrder')
+      let jsonData = JSON.parse(fetchOrder)
+      setBucket(jsonData)
+      }
+
+  
+}, [])
+useEffect(() => {
+  if (localStorage.getItem('AuthUser') != null) {
+    let fetchUser = localStorage.getItem('AuthUser')
+    let jsonData = JSON.parse(fetchUser)
+    setAuthUser(jsonData)
+  }}, [])
+
+useEffect(() => {
+  if (localStorage.getItem('ProductsList') != null) {
+    let fetchProduct = localStorage.getItem('ProductsList')
+    let jsonData = JSON.parse(fetchProduct)
+    setProduct(jsonData)
+
+    setIsLoading(false)
+  }
+}, [])
+  
 
   if (isLoading) {
     return (
@@ -60,33 +149,35 @@ const About = () => {
   }
 
   return (
+
     <div>
-      <MDBContainer fluid className=" my-5 text-center">
+    
+    <MDBContainer fluid className=" my-5 text-center">
         <h4 className="mt-4 mb-5">
-          <strong>Fashions</strong>
+        <strong>Fashions</strong>
         </h4>
         <MDBRow>
           {product && product.length > 0 ? (
             product.map((item, index) => {
               return (
                 <MDBCol
-                  hidden={item.categorie != 'Fashions'}
-                  sm="6"
-                  md="4"
-                  lg="3"
-                  className="mb-4 justify-center"
+                hidden={item.categorie != 'Fashions'}
+                sm="6"
+                md="4"
+                lg="3"
+                className="mb-4 justify-center"
                 >
                   <MDBCard key={index}>
                     <MDBRipple
                       rippleColor="light"
                       rippleTag="div"
                       className="bg-image d-flex justify-center rounded hover-zoom"
-                    >
+                      >
                       <MDBCardImage
                         src={item.imgUrl}
                         fluid
                         className=" max-h-[120px]"
-                      />
+                        />
                       <a href="#!">
                         <div className="mask">
                           <div className="d-flex justify-content-start align-items-end h-100">
@@ -101,7 +192,7 @@ const About = () => {
                             style={{
                               backgroundColor: 'rgba(251, 251, 251, 0.15)',
                             }}
-                          ></div>
+                            ></div>
                         </div>
                       </a>
                     </MDBRipple>
@@ -113,7 +204,12 @@ const About = () => {
                         <p>{item.categorie}</p>
                       </a>
                       <h6>{item.price}</h6>
-                      <MDBBtn color="black" className="my-4" size="lg">
+                      <MDBBtn
+                        onClick={() => addToCart(item)}
+                        color="black"
+                        className="my-4"
+                        size="lg"
+                        >
                         Add to Cart
                       </MDBBtn>
                     </MDBCardBody>
@@ -128,10 +224,10 @@ const About = () => {
       </MDBContainer>
 
       <MDBContainer fluid className=" my-5 text-center">
-        <h4 className="mt-4 mb-5">
-          <strong>Laptops</strong>
-        </h4>
-        <MDBRow>
+      <h4 className="mt-4 mb-5">
+      <strong>Laptops</strong>
+      </h4>
+      <MDBRow>
           {product && product.length > 0 ? (
             product.map((item, index) => {
               return (
@@ -141,13 +237,13 @@ const About = () => {
                   md="4"
                   lg="3"
                   className="mb-4 justify-center "
-                >
+                  >
                   <MDBCard key={index}>
                     <MDBRipple
                       rippleColor="light"
                       rippleTag="div"
                       className="bg-image d-flex justify-center rounded hover-zoom"
-                    >
+                      >
                       <MDBCardImage src={item.imgUrl} fluid className="" />
                       <a href="#!">
                         <div className="mask">
@@ -163,7 +259,7 @@ const About = () => {
                             style={{
                               backgroundColor: 'rgba(251, 251, 251, 0.15)',
                             }}
-                          ></div>
+                            ></div>
                         </div>
                       </a>
                     </MDBRipple>
@@ -175,7 +271,12 @@ const About = () => {
                         <p>{item.categorie}</p>
                       </a>
                       <h6>{item.price}</h6>
-                      <MDBBtn color="black" className="my-4" size="lg">
+                      <MDBBtn
+                        onClick={() => addToCart(item)}
+                        color="black"
+                        className="my-4"
+                        size="lg"
+                      >
                         Add to Cart
                       </MDBBtn>
                     </MDBCardBody>
@@ -187,29 +288,29 @@ const About = () => {
             <h1>No Product Found</h1>
           )}
         </MDBRow>
-      </MDBContainer>
+        </MDBContainer>
 
       <MDBContainer fluid className=" my-5 text-center">
         <h4 className="mt-4 mb-5">
           <strong>Mobile Phones</strong>
-        </h4>
-        <MDBRow>
+          </h4>
+          <MDBRow>
           {product && product.length > 0 ? (
             product.map((item, index) => {
               return (
                 <MDBCol
-                  hidden={item.categorie != 'Mobile Phones'}
-                  sm="6"
-                  md="4"
-                  lg="3"
-                  className="mb-4 justify-center w-[350px] "
+                hidden={item.categorie != 'Mobile Phones'}
+                sm="6"
+                md="4"
+                lg="3"
+                className="mb-4 justify-center w-[350px] "
                 >
                   <MDBCard key={index}>
                     <MDBRipple
                       rippleColor="light"
                       rippleTag="div"
                       className="bg-image d-flex justify-center rounded hover-zoom"
-                    >
+                      >
                       <MDBCardImage
                         src={item.imgUrl}
                         fluid
@@ -241,7 +342,12 @@ const About = () => {
                         <p>{item.categorie}</p>
                       </a>
                       <h6>{item.price}</h6>
-                      <MDBBtn color="black" className="my-4" size="lg">
+                      <MDBBtn
+                        onClick={() => addToCart(item)}
+                        color="black"
+                        className="my-4"
+                        size="lg"
+                        >
                         Add to Cart
                       </MDBBtn>
                     </MDBCardBody>
@@ -255,7 +361,8 @@ const About = () => {
         </MDBRow>
       </MDBContainer>
     </div>
-  )
-}
+    )}
 
-export default About
+
+    export default About
+    

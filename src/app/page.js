@@ -31,12 +31,10 @@ import {
   HiTable,
   HiUser,
 } from 'react-icons/hi'
-import { twMerge } from 'tailwind-merge'
 import './ecommerce-category-product.css'
 import Image from 'next/image'
 import { useState } from 'react'
 import Link from 'next/link'
-import ClipLoader from "react-spinners/ClipLoader";
 
 const App = () => {
   const [openBasic, setOpenBasic] = useState(false)

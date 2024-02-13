@@ -18,10 +18,13 @@ import {
   MDBModalBody,
   MDBModalFooter,
 } from 'mdb-react-ui-kit'
-import getUsers from '@/hooks/getUsers'
+import getUsers from '../../hooks/getUsers'
+
+// or via CommonJS
 // import { useRouter } from 'next/navigation';
 
 function App() {
+  const Swal = require('sweetalert2')
   // for Users
   const [isLoading, setIsLoading] = useState(true)
   const { loggedUser } = getUsers()
@@ -50,7 +53,7 @@ function App() {
     console.log(user)
     if (user) return user
   }
-  
+
   const checkUserPassword = () => {
     var passwordFound = false
     const user = loggedUser.find((i) => i.email === formStates.email)
@@ -86,7 +89,24 @@ function App() {
     } else {
       let checkUser = doesUserExist2()
       localStorage.setItem('AuthUser', JSON.stringify(checkUser))
-      toggleOpen()
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer
+          toast.onmouseleave = Swal.resumeTimer
+        },
+      })
+      Toast.fire({
+        icon: 'success',
+        title: 'Signed in successfully',
+      })
+      setTimeout(() => {
+        window.location.href = '/'
+      }, 2000)
     }
   }
 
@@ -124,7 +144,6 @@ function App() {
       </div>
     )
   }
-
 
   return (
     <MDBContainer className="my-5">
