@@ -1,7 +1,5 @@
 'use client'
 
-import '../styles.css'
-
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { Card } from 'flowbite-react'

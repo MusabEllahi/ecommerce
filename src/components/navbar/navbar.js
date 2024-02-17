@@ -1,6 +1,5 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import '../../app/styles.css'
 import { Sidebar } from 'flowbite-react'
 import {
   HiArrowSmRight,
