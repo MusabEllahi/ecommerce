@@ -26,11 +26,11 @@ import {
   MDBBtn,
   MDBBadge,
 } from 'mdb-react-ui-kit'
-import getUsers from '../../hooks/useGetUsers'
+import useGetUsers from '../../hooks/useGetUsers'
 import { useRouter } from 'next/navigation'
 
 export default function App() {
-  const { loggedUser } = getUsers()
+  const { loggedUser } = useGetUsers()
   const [openNavSecond, setOpenNavSecond] = useState(false)
   const [authenticatedUser, setAuthenticatedUser] = useState(null)
   const [order,setOrder] = useState([])

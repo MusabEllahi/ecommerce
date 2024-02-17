@@ -18,7 +18,7 @@ import {
   MDBModalBody,
   MDBModalFooter,
 } from 'mdb-react-ui-kit'
-import getUsers from '../../hooks/useGetUsers'
+import useGetUsers from '../../hooks/useGetUsers'
 
 // or via CommonJS
 // import { useRouter } from 'next/navigation';
@@ -27,7 +27,7 @@ function App() {
   const Swal = require('sweetalert2')
   // for Users
   const [isLoading, setIsLoading] = useState(true)
-  const { loggedUser } = getUsers()
+  const { loggedUser } = useGetUsers()
   const [formStates, setFormStates] = useState({
     email: '',
     password: '',

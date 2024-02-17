@@ -16,12 +16,12 @@ import {
   MDBModalFooter,
 } from 'mdb-react-ui-kit'
 import { useState, useEffect } from 'react'
-import getUsers from '../../hooks/useGetUsers'
+import useGetUsers from '../../hooks/useGetUsers'
 import { useRouter } from 'next/navigation'
 
 function App() {
   const [basicModal, setBasicModal] = useState(false)
-  const { loggedUser, setLoggedUser } = getUsers()
+  const { loggedUser, setLoggedUser } = useGetUsers()
   const [isChecked, setIsChecked] = useState(false)
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)

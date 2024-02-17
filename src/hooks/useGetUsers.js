@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const getUsers = () => {
+const useGetUsers = () => {
     const [loggedUser, setLoggedUser] = useState([])
 
     useEffect(() => {
@@ -16,4 +16,4 @@ const getUsers = () => {
     return { loggedUser, setLoggedUser }
 }
 
-export default getUsers
+export default useGetUsers
