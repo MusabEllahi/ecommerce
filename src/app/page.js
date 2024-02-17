@@ -31,11 +31,10 @@ import {
   HiTable,
   HiUser,
 } from 'react-icons/hi'
-import './ecommerce-category-product.css'
 import Image from 'next/image'
 import { useState } from 'react'
 import Link from 'next/link'
-import '../app/styles.css'
+import { twMerge } from 'tailwind-merge'
 
 const App = () => {
   const [openBasic, setOpenBasic] = useState(false)
