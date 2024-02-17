@@ -35,6 +35,7 @@ import './ecommerce-category-product.css'
 import Image from 'next/image'
 import { useState } from 'react'
 import Link from 'next/link'
+import '../../app/styles.css'
 
 const App = () => {
   const [openBasic, setOpenBasic] = useState(false)
