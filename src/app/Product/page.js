@@ -74,7 +74,7 @@ const About = () => {
       });
       return
     }
-    cloneBucket.push(productData)
+    cloneBucket.push({...productData,quantity:1})
     setBucket(cloneBucket)
     localStorage.setItem("YourOrder",JSON.stringify(cloneBucket))
     const Toast = Swal.mixin({
@@ -161,6 +161,7 @@ useEffect(() => {
             product.map((item, index) => {
               return (
                 <MDBCol
+                key={index}
                 hidden={item.categorie != 'Fashions'}
                 sm="6"
                 md="4"
@@ -232,13 +233,14 @@ useEffect(() => {
             product.map((item, index) => {
               return (
                 <MDBCol
+                key={index}
                   hidden={item.categorie != 'Laptops'}
                   sm="6"
                   md="4"
                   lg="3"
                   className="mb-4 justify-center "
                   >
-                  <MDBCard key={index}>
+                  <MDBCard >
                     <MDBRipple
                       rippleColor="light"
                       rippleTag="div"
@@ -299,13 +301,14 @@ useEffect(() => {
             product.map((item, index) => {
               return (
                 <MDBCol
+                key={index}
                 hidden={item.categorie != 'Mobile Phones'}
                 sm="6"
                 md="4"
                 lg="3"
                 className="mb-4 justify-center w-[350px] "
                 >
-                  <MDBCard key={index}>
+                  <MDBCard>
                     <MDBRipple
                       rippleColor="light"
                       rippleTag="div"

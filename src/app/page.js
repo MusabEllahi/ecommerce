@@ -216,21 +216,21 @@ const App = () => {
       </div>
       <MDBContainer fluid className=" my-5 text-center">
         <h4 className="mt-4 mb-5">
-          <strong>Best Seller's</strong>
+          <strong>Best Seller{"'"}s</strong>
         </h4>
         <div className="flex flex-row ">
           <MDBRow>
             {product && product.length > 0 ? (
               product.map((item, index) => {
                 return (
-                  <MDBCol
+                  <MDBCol key={index}
                     hidden={item.categorie != 'Fashions'}
                     sm="6"
                     md="4"
                     lg="3"
                     className="mb-4 justify-center"
                   >
-                    <MDBCard key={index}>
+                    <MDBCard>
                       <MDBRipple
                         rippleColor="light"
                         rippleTag="div"

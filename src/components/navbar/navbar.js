@@ -26,7 +26,7 @@ import {
   MDBBtn,
   MDBBadge,
 } from 'mdb-react-ui-kit'
-import getUsers from '../../hooks/getUsers'
+import getUsers from '../../hooks/useGetUsers'
 import { useRouter } from 'next/navigation'
 
 export default function App() {
@@ -49,7 +49,7 @@ export default function App() {
       let jsonData = JSON.parse(fetchOrder)
       setOrder(jsonData)
     }
-  }, [order.length])
+  }, [order])
 
   return (
     <div>

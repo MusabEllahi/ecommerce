@@ -16,7 +16,7 @@ import {
   MDBModalFooter,
 } from 'mdb-react-ui-kit'
 import { useState, useEffect } from 'react'
-import getUsers from '../../hooks/getUsers'
+import getUsers from '../../hooks/useGetUsers'
 import { useRouter } from 'next/navigation'
 
 function App() {

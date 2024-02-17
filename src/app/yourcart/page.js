@@ -120,7 +120,7 @@ import {
                     {order && order.length > 0 ? (
             order.map((item, index) => {
               return (
-                    <MDBRow className="mb-4 d-flex justify-content-between align-items-center">
+                    <MDBRow key={index} className="mb-4 d-flex justify-content-between align-items-center">
                       <MDBCol md="2" lg="2" xl="2">
                         <MDBCardImage
                           src={item.imgUrl}
@@ -139,7 +139,7 @@ import {
                           <MDBIcon fas icon="minus" />
                         </MDBBtn>
   
-                        <MDBInput type="number" min="0" defaultValue={inputVal} size="sm" />
+                        <MDBInput type="number" min="0" className="px-5" defaultValue={item.quantity} size="sm" />
   
                         <MDBBtn color="link" className="px-2">
                           <MDBIcon onClick={addValue} fas icon="plus" />
