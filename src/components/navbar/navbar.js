@@ -27,6 +27,7 @@ import {
 } from 'mdb-react-ui-kit'
 import useGetUsers from '../../hooks/useGetUsers'
 import { useRouter } from 'next/navigation'
+import "./../../app/styles.css"
 
 export default function App() {
   const { loggedUser } = useGetUsers()
